@@ -358,12 +358,13 @@ input[type="text"] {
 
 #house-cat-sprite.sleeping {
     animation: sleep 2s ease-in-out infinite;
-    opacity: 0.8;
+    opacity: 0.9;
+    transform: scaleX(1.2) scaleY(0.8) rotate(-5deg);
 }
 
 @keyframes sleep {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    0%, 100% { transform: scaleX(1.2) scaleY(0.8) rotate(-5deg); }
+    50% { transform: scaleX(1.25) scaleY(0.75) rotate(-3deg); }
 }
 
 .sleep-indicator {

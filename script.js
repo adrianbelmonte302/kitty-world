@@ -353,6 +353,12 @@ function initHouseCatMovement() {
         const distance = Math.sqrt(Math.pow(catCenterX - bedCenterX, 2) + Math.pow(catCenterY - bedCenterY, 2));
 
         if (distance < 80) { // Distancia para activar dormir
+            // Mover al gato dentro de la cama antes de dormir
+            catX = bedRect.left + bedRect.width / 2 - 32; // Centrar en la cama (32 es la mitad del ancho del sprite)
+            catY = bedRect.top + bedRect.height / 2 - 32; // Centrar en la cama (32 es la mitad del alto del sprite)
+            houseCatSprite.style.left = catX + 'px';
+            houseCatSprite.style.top = catY + 'px';
+
             startSleeping();
         }
     }
@@ -366,9 +372,9 @@ function initHouseCatMovement() {
         // Crear indicador de dormir
         sleepIndicator = document.createElement('div');
         sleepIndicator.className = 'sleep-indicator';
-        sleepIndicator.textContent = '💤 Durmiendo...';
-        sleepIndicator.style.left = (catX + 32) + 'px';
-        sleepIndicator.style.top = (catY - 30) + 'px';
+        sleepIndicator.textContent = '� Durmiendo en la cama...';
+        sleepIndicator.style.left = (catX + 16) + 'px'; // Centrar mejor
+        sleepIndicator.style.top = (catY - 40) + 'px'; // Más arriba
         document.getElementById('house-room').appendChild(sleepIndicator);
 
         // El gato se despierta después de 5 segundos
