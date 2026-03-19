@@ -397,9 +397,18 @@ function initHouseCatMovement() {
     // Event listeners para movimiento dentro de la casa
     document.addEventListener('keydown', function(e) {
         const houseInterior = document.getElementById('house-interior');
-        if (houseInterior.style.display !== 'block' || isSleeping) return;
+        if (houseInterior.style.display !== 'block') return;
 
         let moved = false;
+
+        // Si está durmiendo y presiona una flecha, despertarlo
+        if (isSleeping && (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+            e.preventDefault();
+            wakeUp();
+            // Después de despertar, procesar el movimiento normalmente
+        }
+
+        if (isSleeping) return; // Si sigue durmiendo, no procesar movimiento
 
         switch(e.key) {
             case 'ArrowUp':
