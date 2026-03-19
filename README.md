@@ -25,7 +25,25 @@ El script instala Nginx y configura el sitio en el puerto 80.
 - `index.html`: Página principal con el launcher
 - `styles.css`: Estilos para la interfaz
 - `script.js`: Lógica JavaScript básica
+- `pixelart/`: Carpeta para imágenes personalizadas de pixel art
 - `README.md`: Este archivo
+
+## Pixel Art Personalizado
+
+Puedes crear tus propias imágenes de pixel art para los gatos. Las especificaciones son:
+
+- **Formato**: PNG con transparencia
+- **Tamaño**: 64x64 píxeles
+- **Estilo**: Pixel art (colores sólidos, sin anti-aliasing)
+
+Coloca tus imágenes en la carpeta `pixelart/` con estos nombres:
+- `birmano.png`
+- `persa.png`
+- `mau-egipcio.png`
+- `siames.png`
+- `esfinge.png`
+
+Si no hay imágenes personalizadas, el juego usará pixel art generado por código como respaldo.
 
 ## Próximos pasos
 
