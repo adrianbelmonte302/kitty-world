@@ -3,6 +3,9 @@
 # Script de instalación para desplegar Kitty World en una VM Linux (Ubuntu/Debian)
 # Este script instala Nginx y configura el sitio web en el puerto 80
 
+echo "Actualizando el código desde el repositorio..."
+git pull origin main
+
 echo "Actualizando el sistema..."
 sudo apt update
 
