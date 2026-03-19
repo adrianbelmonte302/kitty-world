@@ -247,7 +247,111 @@ input[type="text"] {
     position: absolute;
     left: 200px;
     top: 300px;
-    font-size: 3em;
+    width: 64px;
+    height: 64px;
     z-index: 3;
     transition: left 0.1s, top 0.1s;
+    image-rendering: pixelated;
+}
+
+#cat-sprite.moving {
+    animation: walk 0.3s steps(2) infinite;
+}
+
+@keyframes walk {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
+}
+
+/* House Interior Styles */
+#house-interior {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #D2B48C 0%, #F5DEB3 100%);
+    overflow: hidden;
+}
+
+#house-ui {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+#house-cat-info {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+#exit-house {
+    background-color: #fd79a8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+#exit-house:hover {
+    background-color: #e84393;
+}
+
+#house-room {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="wood" patternUnits="userSpaceOnUse" width="20" height="20"><rect width="20" height="20" fill="%23D2B48C"/><rect x="0" y="0" width="20" height="2" fill="%238B4513"/><rect x="0" y="18" width="20" height="2" fill="%238B4513"/></pattern></defs><rect width="100" height="100" fill="url(%23wood)"/></svg>');
+}
+
+#bed {
+    position: absolute;
+    right: 50px;
+    top: 100px;
+    font-size: 3em;
+    z-index: 1;
+}
+
+#food-bowl {
+    position: absolute;
+    left: 100px;
+    bottom: 100px;
+    font-size: 2.5em;
+    z-index: 1;
+}
+
+#toy {
+    position: absolute;
+    left: 300px;
+    top: 200px;
+    font-size: 2em;
+    z-index: 1;
+}
+
+#window {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    font-size: 2.5em;
+    z-index: 1;
+}
+
+#house-cat-sprite {
+    position: absolute;
+    left: 250px;
+    top: 250px;
+    width: 64px;
+    height: 64px;
+    z-index: 2;
+    image-rendering: pixelated;
 }

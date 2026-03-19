@@ -196,53 +196,122 @@ function showGameScreen(catData) {
     const gameScreen = document.getElementById('game-screen');
     const catNameDisplay = document.getElementById('cat-name-display');
     const catBreedDisplay = document.getElementById('cat-breed-display');
+    const catSprite = document.getElementById('cat-sprite');
 
     // Mostrar información del gato
     catNameDisplay.textContent = catData.name;
     catBreedDisplay.textContent = catData.breed.replace('-', ' ');
 
+    // Configurar sprite del gato con la imagen de la raza
+    catSprite.src = `pixelart/${catData.breed}.png`;
+
     // Mostrar pantalla del juego
     gameScreen.style.display = 'block';
 
     // Inicializar movimiento del gato
-    initCatMovement();
+    initCatMovement(catData);
 }
 
-function initCatMovement() {
+function initCatMovement(catData) {
     const catSprite = document.getElementById('cat-sprite');
+    const house = document.getElementById('house');
     let catX = 200;
     let catY = 300;
     const moveSpeed = 10;
+    let isMoving = false;
+    let moveTimeout;
 
     // Posición inicial
     catSprite.style.left = catX + 'px';
     catSprite.style.top = catY + 'px';
+
+    // Función para verificar si el gato está en la puerta
+    function checkDoorCollision() {
+        const houseRect = house.getBoundingClientRect();
+        const catRect = catSprite.getBoundingClientRect();
+
+        // Verificar si el gato está cerca de la puerta (zona de colisión)
+        const doorX = houseRect.left + houseRect.width / 2;
+        const doorY = houseRect.top + houseRect.height / 2;
+        const distance = Math.sqrt(Math.pow(catRect.left - doorX, 2) + Math.pow(catRect.top - doorY, 2));
+
+        if (distance < 80) { // Distancia de activación
+            enterHouse(catData);
+        }
+    }
 
     // Event listeners para movimiento
     document.addEventListener('keydown', function(e) {
         const gameScreen = document.getElementById('game-screen');
         if (gameScreen.style.display !== 'block') return;
 
+        let moved = false;
+
         switch(e.key) {
             case 'ArrowUp':
                 e.preventDefault();
                 catY = Math.max(0, catY - moveSpeed);
+                moved = true;
                 break;
             case 'ArrowDown':
                 e.preventDefault();
-                catY = Math.min(window.innerHeight - 60, catY + moveSpeed);
+                catY = Math.min(window.innerHeight - 64, catY + moveSpeed);
+                moved = true;
                 break;
             case 'ArrowLeft':
                 e.preventDefault();
                 catX = Math.max(0, catX - moveSpeed);
+                moved = true;
                 break;
             case 'ArrowRight':
                 e.preventDefault();
-                catX = Math.min(window.innerWidth - 60, catX + moveSpeed);
+                catX = Math.min(window.innerWidth - 64, catX + moveSpeed);
+                moved = true;
                 break;
         }
 
-        catSprite.style.left = catX + 'px';
-        catSprite.style.top = catY + 'px';
+        if (moved) {
+            catSprite.style.left = catX + 'px';
+            catSprite.style.top = catY + 'px';
+
+            // Agregar clase de movimiento para animación
+            catSprite.classList.add('moving');
+
+            // Limpiar timeout anterior
+            clearTimeout(moveTimeout);
+
+            // Remover clase de movimiento después de un tiempo
+            moveTimeout = setTimeout(() => {
+                catSprite.classList.remove('moving');
+            }, 150);
+
+            // Verificar colisión con la puerta
+            checkDoorCollision();
+        }
+    });
+}
+
+function enterHouse(catData) {
+    const gameScreen = document.getElementById('game-screen');
+    const houseInterior = document.getElementById('house-interior');
+    const houseCatName = document.getElementById('house-cat-name');
+    const houseCatBreed = document.getElementById('house-cat-breed');
+    const houseCatSprite = document.getElementById('house-cat-sprite');
+
+    // Ocultar mundo exterior
+    gameScreen.style.display = 'none';
+
+    // Mostrar interior de la casa
+    houseInterior.style.display = 'block';
+
+    // Configurar información del gato en la casa
+    houseCatName.textContent = catData.name;
+    houseCatBreed.textContent = catData.breed.replace('-', ' ');
+    houseCatSprite.src = `pixelart/${catData.breed}.png`;
+
+    // Agregar event listener para salir de la casa
+    document.getElementById('exit-house').addEventListener('click', function() {
+        houseInterior.style.display = 'none';
+        gameScreen.style.display = 'block';
     });
 }
