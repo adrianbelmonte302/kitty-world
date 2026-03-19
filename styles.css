@@ -356,6 +356,23 @@ input[type="text"] {
     image-rendering: pixelated;
 }
 
-#house-cat-sprite.moving {
-    animation: walk 0.3s steps(2) infinite;
+#house-cat-sprite.sleeping {
+    animation: sleep 2s ease-in-out infinite;
+    opacity: 0.8;
+}
+
+@keyframes sleep {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.sleep-indicator {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 5;
 }

@@ -17,6 +17,7 @@ Un juego web divertido ambientado en el mundo de los gatos, creado con HTML5, CS
 - **Casa Interior**: Explora el interior con cama, comida, juguetes y ventana
 - **Movimiento**: Controla a tu gato con las flechas del teclado en ambos mundos
 - **Animación**: El gato "camina" cuando se mueve
+- **Sistema de Sueño**: Acércate a la cama para que tu gato duerma (5 segundos)
 - **Sprites Personalizados**: Usa tus propias imágenes de pixel art para los gatos
 
 ## Despliegue en servidor

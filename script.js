@@ -321,20 +321,77 @@ function enterHouse(catData) {
 
 function initHouseCatMovement() {
     const houseCatSprite = document.getElementById('house-cat-sprite');
+    const bed = document.getElementById('bed');
     let catX = 250;
     let catY = 250;
     const moveSpeed = 8;
     let isMoving = false;
     let moveTimeout;
+    let isSleeping = false;
+    let sleepIndicator = null;
 
     // Posición inicial
     houseCatSprite.style.left = catX + 'px';
     houseCatSprite.style.top = catY + 'px';
 
+    // Función para verificar si el gato está cerca de la cama
+    function checkBedCollision() {
+        if (isSleeping) return; // Si ya está durmiendo, no verificar
+
+        const bedRect = bed.getBoundingClientRect();
+        const catRect = houseCatSprite.getBoundingClientRect();
+
+        // Centro de la cama
+        const bedCenterX = bedRect.left + bedRect.width / 2;
+        const bedCenterY = bedRect.top + bedRect.height / 2;
+
+        // Centro del gato
+        const catCenterX = catRect.left + catRect.width / 2;
+        const catCenterY = catRect.top + catRect.height / 2;
+
+        // Distancia entre centros
+        const distance = Math.sqrt(Math.pow(catCenterX - bedCenterX, 2) + Math.pow(catCenterY - bedCenterY, 2));
+
+        if (distance < 80) { // Distancia para activar dormir
+            startSleeping();
+        }
+    }
+
+    // Función para hacer que el gato se duerma
+    function startSleeping() {
+        isSleeping = true;
+        houseCatSprite.classList.add('sleeping');
+        houseCatSprite.classList.remove('moving');
+
+        // Crear indicador de dormir
+        sleepIndicator = document.createElement('div');
+        sleepIndicator.className = 'sleep-indicator';
+        sleepIndicator.textContent = '💤 Durmiendo...';
+        sleepIndicator.style.left = (catX + 32) + 'px';
+        sleepIndicator.style.top = (catY - 30) + 'px';
+        document.getElementById('house-room').appendChild(sleepIndicator);
+
+        // El gato se despierta después de 5 segundos
+        setTimeout(() => {
+            wakeUp();
+        }, 5000);
+    }
+
+    // Función para despertar al gato
+    function wakeUp() {
+        isSleeping = false;
+        houseCatSprite.classList.remove('sleeping');
+
+        if (sleepIndicator) {
+            sleepIndicator.remove();
+            sleepIndicator = null;
+        }
+    }
+
     // Event listeners para movimiento dentro de la casa
     document.addEventListener('keydown', function(e) {
         const houseInterior = document.getElementById('house-interior');
-        if (houseInterior.style.display !== 'block') return;
+        if (houseInterior.style.display !== 'block' || isSleeping) return;
 
         let moved = false;
 
@@ -375,6 +432,9 @@ function initHouseCatMovement() {
             moveTimeout = setTimeout(() => {
                 houseCatSprite.classList.remove('moving');
             }, 150);
+
+            // Verificar colisión con la cama
+            checkBedCollision();
         }
     });
 }
