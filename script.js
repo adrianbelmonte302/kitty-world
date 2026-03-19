@@ -164,12 +164,8 @@ document.addEventListener('DOMContentLoaded', function() {
     creationForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const catName = document.getElementById('cat-name').value.trim();
-        if (!catName) {
-            alert('Por favor, ingresa un nombre para tu gatito.');
-            return;
-        }
-        if (!selectedBreed) {
-            alert('Por favor, selecciona una raza para tu gatito.');
+        if (!catName || !selectedBreed) {
+            alert('Recuerda que debes elegir un nombre y una raza para tu gatito.');
             return;
         }
 
