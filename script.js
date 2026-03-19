@@ -171,21 +171,78 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log('Creating cat:', catName, selectedBreed);
 
-        // Aquí guardaremos los datos del gato (por ahora en localStorage)
+        // Guardar datos del gato
         const catData = {
             name: catName,
             breed: selectedBreed
         };
         localStorage.setItem('kittyWorldCat', JSON.stringify(catData));
 
-        // Ocultar creación y mostrar juego (placeholder)
+        // Mostrar pantalla del juego
         characterCreation.style.display = 'none';
-        alert(`¡Bienvenido, ${catName} el ${selectedBreed.replace('-', ' ')}! El juego comenzará pronto.`);
+        showGameScreen(catData);
+    });
 
-        // Aquí irá la lógica para iniciar el juego
-        // Por ahora, recargamos para volver al launcher
-        setTimeout(() => {
-            location.reload();
-        }, 2000);
+    // Back to launcher button
+    document.getElementById('back-to-launcher').addEventListener('click', function() {
+        const gameScreen = document.getElementById('game-screen');
+        const launcher = document.getElementById('launcher');
+        gameScreen.style.display = 'none';
+        launcher.style.display = 'block';
     });
 });
+
+function showGameScreen(catData) {
+    const gameScreen = document.getElementById('game-screen');
+    const catNameDisplay = document.getElementById('cat-name-display');
+    const catBreedDisplay = document.getElementById('cat-breed-display');
+
+    // Mostrar información del gato
+    catNameDisplay.textContent = catData.name;
+    catBreedDisplay.textContent = catData.breed.replace('-', ' ');
+
+    // Mostrar pantalla del juego
+    gameScreen.style.display = 'block';
+
+    // Inicializar movimiento del gato
+    initCatMovement();
+}
+
+function initCatMovement() {
+    const catSprite = document.getElementById('cat-sprite');
+    let catX = 200;
+    let catY = 300;
+    const moveSpeed = 10;
+
+    // Posición inicial
+    catSprite.style.left = catX + 'px';
+    catSprite.style.top = catY + 'px';
+
+    // Event listeners para movimiento
+    document.addEventListener('keydown', function(e) {
+        const gameScreen = document.getElementById('game-screen');
+        if (gameScreen.style.display !== 'block') return;
+
+        switch(e.key) {
+            case 'ArrowUp':
+                e.preventDefault();
+                catY = Math.max(0, catY - moveSpeed);
+                break;
+            case 'ArrowDown':
+                e.preventDefault();
+                catY = Math.min(window.innerHeight - 60, catY + moveSpeed);
+                break;
+            case 'ArrowLeft':
+                e.preventDefault();
+                catX = Math.max(0, catX - moveSpeed);
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                catX = Math.min(window.innerWidth - 60, catX + moveSpeed);
+                break;
+        }
+
+        catSprite.style.left = catX + 'px';
+        catSprite.style.top = catY + 'px';
+    });
+}
