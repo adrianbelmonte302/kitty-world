@@ -9,6 +9,17 @@ Un juego web divertido ambientado en el mundo de los gatos, creado con HTML5, CS
 3. Usa "Opciones" para ajustes futuros.
 4. "Salir" para cerrar (en navegadores, confirma la salida).
 
+## Despliegue en servidor
+
+Para desplegar el juego en un servidor (como una VM local), sigue estos pasos:
+
+1. Clona el repositorio: `git clone https://github.com/adrianbelmonte302/kitty-world.git`
+2. Entra al directorio: `cd kitty-world`
+3. Ejecuta el script de instalación: `bash install.sh` (requiere sudo)
+4. Accede al juego en `http://localhost` o `http://<IP-del-servidor>`
+
+El script instala Nginx y configura el sitio en el puerto 80.
+
 ## Estructura del proyecto
 
 - `index.html`: Página principal con el launcher
