@@ -355,3 +355,7 @@ input[type="text"] {
     z-index: 2;
     image-rendering: pixelated;
 }
+
+#house-cat-sprite.moving {
+    animation: walk 0.3s steps(2) infinite;
+}

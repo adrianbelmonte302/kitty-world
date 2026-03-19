@@ -309,9 +309,72 @@ function enterHouse(catData) {
     houseCatBreed.textContent = catData.breed.replace('-', ' ');
     houseCatSprite.src = `pixelart/${catData.breed}.png`;
 
+    // Inicializar movimiento del gato dentro de la casa
+    initHouseCatMovement();
+
     // Agregar event listener para salir de la casa
     document.getElementById('exit-house').addEventListener('click', function() {
         houseInterior.style.display = 'none';
         gameScreen.style.display = 'block';
+    });
+}
+
+function initHouseCatMovement() {
+    const houseCatSprite = document.getElementById('house-cat-sprite');
+    let catX = 250;
+    let catY = 250;
+    const moveSpeed = 8;
+    let isMoving = false;
+    let moveTimeout;
+
+    // Posición inicial
+    houseCatSprite.style.left = catX + 'px';
+    houseCatSprite.style.top = catY + 'px';
+
+    // Event listeners para movimiento dentro de la casa
+    document.addEventListener('keydown', function(e) {
+        const houseInterior = document.getElementById('house-interior');
+        if (houseInterior.style.display !== 'block') return;
+
+        let moved = false;
+
+        switch(e.key) {
+            case 'ArrowUp':
+                e.preventDefault();
+                catY = Math.max(0, catY - moveSpeed);
+                moved = true;
+                break;
+            case 'ArrowDown':
+                e.preventDefault();
+                catY = Math.min(window.innerHeight - 64, catY + moveSpeed);
+                moved = true;
+                break;
+            case 'ArrowLeft':
+                e.preventDefault();
+                catX = Math.max(0, catX - moveSpeed);
+                moved = true;
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                catX = Math.min(window.innerWidth - 64, catX + moveSpeed);
+                moved = true;
+                break;
+        }
+
+        if (moved) {
+            houseCatSprite.style.left = catX + 'px';
+            houseCatSprite.style.top = catY + 'px';
+
+            // Agregar clase de movimiento para animación
+            houseCatSprite.classList.add('moving');
+
+            // Limpiar timeout anterior
+            clearTimeout(moveTimeout);
+
+            // Remover clase de movimiento después de un tiempo
+            moveTimeout = setTimeout(() => {
+                houseCatSprite.classList.remove('moving');
+            }, 150);
+        }
     });
 }
