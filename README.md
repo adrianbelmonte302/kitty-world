@@ -5,9 +5,19 @@ Un juego web divertido ambientado en el mundo de los gatos, creado con HTML5, CS
 ## Cómo ejecutar
 
 1. Abre `index.html` en tu navegador web favorito.
-2. Haz clic en "Empezar Juego" para comenzar (funcionalidad próximamente).
-3. Usa "Opciones" para ajustes futuros.
-4. "Salir" para cerrar (en navegadores, confirma la salida).
+2. Haz clic en "Empezar Juego" para crear tu personaje.
+3. Elige un nombre y selecciona una raza de gato.
+4. ¡Explora el mundo virtual moviendo a tu gato con las flechas del teclado!
+5. Acércate a la casa para entrar al interior.
+
+## Características del Juego
+
+- **Creación de Personaje**: Elige nombre y raza de gato (Birmano, Persa, Mau Egipcio, Siamés, Esfinge)
+- **Mundo Exterior**: Jardín con casa, árboles y río
+- **Movimiento**: Controla a tu gato con las flechas del teclado
+- **Animación**: El gato "camina" cuando se mueve
+- **Casa Interior**: Explora el interior con cama, comida, juguetes y ventana
+- **Sprites Personalizados**: Usa tus propias imágenes de pixel art para los gatos
 
 ## Despliegue en servidor
 
