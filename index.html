@@ -14,6 +14,40 @@
         <button id="options-btn">Opciones</button>
         <button id="exit-btn">Salir</button>
     </div>
+
+    <div id="character-creation" style="display: none;">
+        <h1>Crear tu Gatito</h1>
+        <form id="creation-form">
+            <label for="cat-name">Nombre de tu gatito:</label>
+            <input type="text" id="cat-name" required maxlength="20">
+
+            <label>Elige la raza:</label>
+            <div class="breed-selection">
+                <div class="breed-option" data-breed="birmano">
+                    <div class="pixel-cat birmano"></div>
+                    <span>Birmano</span>
+                </div>
+                <div class="breed-option" data-breed="persa">
+                    <div class="pixel-cat persa"></div>
+                    <span>Persa</span>
+                </div>
+                <div class="breed-option" data-breed="mau-egipcio">
+                    <div class="pixel-cat mau-egipcio"></div>
+                    <span>Mau Egipcio</span>
+                </div>
+                <div class="breed-option" data-breed="siames">
+                    <div class="pixel-cat siames"></div>
+                    <span>Siamés</span>
+                </div>
+                <div class="breed-option" data-breed="esfinge">
+                    <div class="pixel-cat esfinge"></div>
+                    <span>Esfinge</span>
+                </div>
+            </div>
+
+            <button type="submit" id="create-btn">¡Crear Gatito!</button>
+        </form>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
