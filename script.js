@@ -381,11 +381,12 @@ function initHouseCatMovement() {
         sleepIndicator.textContent = '� Durmiendo en la cama...';
         sleepIndicator.style.left = (catX + 16) + 'px'; // Centrar mejor
         sleepIndicator.style.top = (catY - 40) + 'px'; // Más arriba
-        document.getElementById('house-room').appendChild(sleepIndicator);
+        houseRoom.appendChild(sleepIndicator);
 
-        // El gato se despierta después de 5 segundos
         setTimeout(() => {
-            wakeUp();
+            if (isSleeping) {
+                wakeUp();
+            }
         }, 5000);
     }
 
@@ -447,12 +448,16 @@ function initHouseCatMovement() {
 
         let moved = false;
 
-        // Si está durmiendo y presiona una flecha, despertarlo y salir de la cama
         if (isSleeping && arrowKeys.has(e.key)) {
             e.preventDefault();
             wakeUp();
             moveCatAwayFromBed(e.key);
-            // Después de despertar, procesar el movimiento normalmente
+            houseCatSprite.classList.add('moving');
+            clearTimeout(moveTimeout);
+            moveTimeout = setTimeout(() => {
+                houseCatSprite.classList.remove('moving');
+            }, 150);
+            return;
         }
 
         if (isSleeping) return; // Si sigue durmiendo, no procesar movimiento
@@ -465,7 +470,7 @@ function initHouseCatMovement() {
                 break;
             case 'ArrowDown':
                 e.preventDefault();
-                catY = Math.min(window.innerHeight - 64, catY + moveSpeed);
+                catY = Math.min(houseRoom.clientHeight - 64, catY + moveSpeed);
                 moved = true;
                 break;
             case 'ArrowLeft':
@@ -475,7 +480,7 @@ function initHouseCatMovement() {
                 break;
             case 'ArrowRight':
                 e.preventDefault();
-                catX = Math.min(window.innerWidth - 64, catX + moveSpeed);
+                catX = Math.min(houseRoom.clientWidth - 64, catX + moveSpeed);
                 moved = true;
                 break;
         }
