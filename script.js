@@ -322,6 +322,8 @@ function enterHouse(catData) {
 function initHouseCatMovement() {
     const houseCatSprite = document.getElementById('house-cat-sprite');
     const bed = document.getElementById('bed');
+    const houseRoom = document.getElementById('house-room');
+    const arrowKeys = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
     let catX = 250;
     let catY = 250;
     const moveSpeed = 8;
@@ -329,6 +331,8 @@ function initHouseCatMovement() {
     let moveTimeout;
     let isSleeping = false;
     let sleepIndicator = null;
+    let bedAvoidanceTimer = 0;
+    const bedAvoidanceDelay = 1200;
 
     // Posición inicial
     houseCatSprite.style.left = catX + 'px';
@@ -337,6 +341,8 @@ function initHouseCatMovement() {
     // Función para verificar si el gato está cerca de la cama
     function checkBedCollision() {
         if (isSleeping) return; // Si ya está durmiendo, no verificar
+
+        if (Date.now() - bedAvoidanceTimer < bedAvoidanceDelay) return;
 
         const bedRect = bed.getBoundingClientRect();
         const catRect = houseCatSprite.getBoundingClientRect();
@@ -394,6 +400,46 @@ function initHouseCatMovement() {
         }
     }
 
+    function clampCatPosition() {
+        const roomWidth = houseRoom.clientWidth;
+        const roomHeight = houseRoom.clientHeight;
+        catX = Math.max(0, Math.min(roomWidth - 64, catX));
+        catY = Math.max(0, Math.min(roomHeight - 64, catY));
+    }
+
+    function moveCatAwayFromBed(direction) {
+        const leaveDistance = 140;
+        const bedCenterX = bed.offsetLeft + bed.offsetWidth / 2 - 32;
+        const bedCenterY = bed.offsetTop + bed.offsetHeight / 2 - 32;
+
+        switch(direction) {
+            case 'ArrowUp':
+                catX = bedCenterX;
+                catY = bed.offsetTop - leaveDistance;
+                break;
+            case 'ArrowDown':
+                catX = bedCenterX;
+                catY = bed.offsetTop + bed.offsetHeight + leaveDistance - 64;
+                break;
+            case 'ArrowLeft':
+                catX = bed.offsetLeft - leaveDistance;
+                catY = bedCenterY;
+                break;
+            case 'ArrowRight':
+                catX = bed.offsetLeft + bed.offsetWidth + leaveDistance - 64;
+                catY = bedCenterY;
+                break;
+            default:
+                catX = bedCenterX;
+                catY = bed.offsetTop - leaveDistance;
+        }
+
+        clampCatPosition();
+        houseCatSprite.style.left = catX + 'px';
+        houseCatSprite.style.top = catY + 'px';
+        bedAvoidanceTimer = Date.now();
+    }
+
     // Event listeners para movimiento dentro de la casa
     document.addEventListener('keydown', function(e) {
         const houseInterior = document.getElementById('house-interior');
@@ -401,10 +447,11 @@ function initHouseCatMovement() {
 
         let moved = false;
 
-        // Si está durmiendo y presiona una flecha, despertarlo
-        if (isSleeping && (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+        // Si está durmiendo y presiona una flecha, despertarlo y salir de la cama
+        if (isSleeping && arrowKeys.has(e.key)) {
             e.preventDefault();
             wakeUp();
+            moveCatAwayFromBed(e.key);
             // Después de despertar, procesar el movimiento normalmente
         }
 
