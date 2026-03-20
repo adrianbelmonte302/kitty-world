@@ -324,6 +324,11 @@ function initHouseCatMovement() {
     const bed = document.getElementById('bed');
     const houseRoom = document.getElementById('house-room');
     const yarn = document.getElementById('yarn');
+    const wardrobe = document.getElementById('wardrobe');
+    const closetScreen = document.getElementById('closet-screen');
+    const closetOptions = closetScreen ? closetScreen.querySelectorAll('.closet-option') : [];
+    const closetClose = document.getElementById('close-closet');
+    const outfitDisplay = document.getElementById('cat-outfit');
     const arrowKeys = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
     let catX = 250;
     let catY = 250;
@@ -334,6 +339,13 @@ function initHouseCatMovement() {
     let sleepIndicator = null;
     let bedAvoidanceTimer = 0;
     const bedAvoidanceDelay = 1200;
+    let isPlaying = false;
+    let playIndicator = null;
+    let playTimeout = null;
+    let closetOpen = false;
+    let closetTimer = 0;
+    const closetDelay = 1500;
+    let currentOutfit = 'Ninguno';
     let isPlaying = false;
     let playIndicator = null;
     let playTimeout = null;
@@ -463,6 +475,55 @@ function initHouseCatMovement() {
         }
     }
 
+    function openClosetScreen() {
+        if (!closetScreen || closetOpen) return;
+        closetScreen.classList.add('open');
+        closetOpen = true;
+    }
+
+    function closeClosetScreen() {
+        if (!closetScreen) return;
+        closetScreen.classList.remove('open');
+        closetOpen = false;
+    }
+
+    function setClosetOutfit(name) {
+        currentOutfit = name;
+        if (outfitDisplay) {
+            outfitDisplay.textContent = `Outfit: ${name}`;
+        }
+        closeClosetScreen();
+    }
+
+    function checkWardrobeProximity() {
+        if (!wardrobe || closetOpen || isSleeping) return;
+        if (Date.now() - closetTimer < closetDelay) return;
+
+        const wardRect = wardrobe.getBoundingClientRect();
+        const catRect = houseCatSprite.getBoundingClientRect();
+        const dx = catRect.left - wardRect.left;
+        const dy = catRect.top - wardRect.top;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 90) {
+            openClosetScreen();
+            closetTimer = Date.now();
+        }
+    }
+
+    closetOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            setClosetOutfit(this.dataset.outfit);
+        });
+    });
+
+    closetClose?.addEventListener('click', closeClosetScreen);
+    closetScreen?.addEventListener('click', function(e) {
+        if (e.target === closetScreen) {
+            closeClosetScreen();
+        }
+    });
+
     function clampCatPosition() {
         const roomWidth = houseRoom.clientWidth;
         const roomHeight = houseRoom.clientHeight;
@@ -520,6 +581,7 @@ function initHouseCatMovement() {
             e.preventDefault();
             wakeUp();
             moveCatAwayFromBed(wakeDirection);
+            checkWardrobeProximity();
             checkYarnInteraction();
             houseCatSprite.classList.add('moving');
             clearTimeout(moveTimeout);
@@ -566,12 +628,13 @@ function initHouseCatMovement() {
 
             // Remover clase de movimiento después de un tiempo
             moveTimeout = setTimeout(() => {
-                houseCatSprite.classList.remove('moving');
-            }, 150);
+            houseCatSprite.classList.remove('moving');
+        }, 150);
 
-            // Verificar colisión con la cama
-            checkYarnInteraction();
-            checkBedCollision();
-        }
+        // Verificar colisión con la cama
+        checkYarnInteraction();
+        checkBedCollision();
+        checkWardrobeProximity();
+    }
     });
 }

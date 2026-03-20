@@ -292,6 +292,15 @@ input[type="text"] {
     color: #333;
 }
 
+#cat-outfit {
+    margin-left: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 6px 14px;
+    border-radius: 12px;
+    border: 1px dashed #ff8a80;
+    font-size: 0.95em;
+}
+
 #exit-house {
     background-color: #fd79a8;
     color: white;
@@ -338,6 +347,91 @@ input[type="text"] {
     z-index: 1;
 }
 
+#wardrobe {
+    position: absolute;
+    right: 60px;
+    top: 20px;
+    font-size: 1.6em;
+    text-align: center;
+    z-index: 2;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+#wardrobe span {
+    display: block;
+    font-size: 0.75em;
+    color: #333;
+}
+
+#wardrobe:hover {
+    transform: translateY(-4px);
+}
+
+#closet-screen {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
+#closet-screen.open {
+    display: flex;
+}
+
+.closet-content {
+    background: white;
+    padding: 30px;
+    border-radius: 22px;
+    text-align: center;
+    width: min(90vw, 420px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.closet-content h2 {
+    margin-top: 0;
+    color: #ff6b6b;
+}
+
+.closet-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.closet-option {
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #ff9a9e;
+    background: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.closet-option:hover {
+    background: #ff9a9e;
+    color: white;
+    transform: translateY(-2px);
+}
+
+#close-closet {
+    background: #fd79a8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#close-closet:hover {
+    background: #e84393;
+}
 #yarn {
     position: absolute;
     left: 80px;
