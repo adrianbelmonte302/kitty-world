@@ -330,20 +330,50 @@ input[type="text"] {
     z-index: 1;
 }
 
-#toy {
-    position: absolute;
-    left: 300px;
-    top: 200px;
-    font-size: 2em;
-    z-index: 1;
-}
-
 #window {
     position: absolute;
     left: 50px;
     top: 50px;
     font-size: 2.5em;
     z-index: 1;
+}
+
+#yarn {
+    position: absolute;
+    left: 80px;
+    top: 170px;
+    font-size: 3em;
+    z-index: 2;
+    animation: yarnGlow 2.4s ease-in-out infinite;
+}
+
+#house-cat-sprite.playing {
+    animation: playPaw 0.5s ease-in-out infinite;
+}
+
+.play-indicator {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 5;
+    font-weight: bold;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes yarnGlow {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes playPaw {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(-6deg) scale(1.05); }
+    100% { transform: rotate(0deg) scale(1); }
 }
 
 #house-cat-sprite {

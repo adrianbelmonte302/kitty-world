@@ -323,6 +323,7 @@ function initHouseCatMovement() {
     const houseCatSprite = document.getElementById('house-cat-sprite');
     const bed = document.getElementById('bed');
     const houseRoom = document.getElementById('house-room');
+    const yarn = document.getElementById('yarn');
     const arrowKeys = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
     let catX = 250;
     let catY = 250;
@@ -333,6 +334,9 @@ function initHouseCatMovement() {
     let sleepIndicator = null;
     let bedAvoidanceTimer = 0;
     const bedAvoidanceDelay = 1200;
+    let isPlaying = false;
+    let playIndicator = null;
+    let playTimeout = null;
 
     // Posición inicial
     houseCatSprite.style.left = catX + 'px';
@@ -372,6 +376,7 @@ function initHouseCatMovement() {
     // Función para hacer que el gato se duerma
     function startSleeping() {
         isSleeping = true;
+        stopPlayingWithYarn();
         houseCatSprite.classList.add('sleeping');
         houseCatSprite.classList.remove('moving');
 
@@ -394,10 +399,67 @@ function initHouseCatMovement() {
     function wakeUp() {
         isSleeping = false;
         houseCatSprite.classList.remove('sleeping');
+        stopPlayingWithYarn();
 
         if (sleepIndicator) {
             sleepIndicator.remove();
             sleepIndicator = null;
+        }
+    }
+
+    function startPlayingWithYarn() {
+        if (!yarn || isPlaying) return;
+        isPlaying = true;
+        houseCatSprite.classList.add('playing');
+
+        if (playIndicator) {
+            playIndicator.remove();
+        }
+
+        playIndicator = document.createElement('div');
+        playIndicator.className = 'play-indicator';
+        playIndicator.textContent = '¡Jugando con la lana!';
+        playIndicator.style.left = (catX + 16) + 'px';
+        playIndicator.style.top = (catY - 40) + 'px';
+        houseRoom.appendChild(playIndicator);
+
+        if (playTimeout) {
+            clearTimeout(playTimeout);
+        }
+
+        playTimeout = setTimeout(() => {
+            stopPlayingWithYarn();
+        }, 2200);
+    }
+
+    function stopPlayingWithYarn() {
+        isPlaying = false;
+        houseCatSprite.classList.remove('playing');
+
+        if (playIndicator) {
+            playIndicator.remove();
+            playIndicator = null;
+        }
+
+        if (playTimeout) {
+            clearTimeout(playTimeout);
+            playTimeout = null;
+        }
+    }
+
+    function checkYarnInteraction() {
+        if (!yarn || isSleeping || isPlaying) return;
+
+        const yarnRect = yarn.getBoundingClientRect();
+        const catRect = houseCatSprite.getBoundingClientRect();
+        const yarnCenterX = yarnRect.left + yarnRect.width / 2;
+        const yarnCenterY = yarnRect.top + yarnRect.height / 2;
+        const catCenterX = catRect.left + catRect.width / 2;
+        const catCenterY = catRect.top + catRect.height / 2;
+        const distance = Math.sqrt(Math.pow(catCenterX - yarnCenterX, 2) + Math.pow(catCenterY - yarnCenterY, 2));
+
+        if (distance < 90) {
+            startPlayingWithYarn();
         }
     }
 
@@ -415,6 +477,10 @@ function initHouseCatMovement() {
 
         switch(direction) {
             case 'ArrowUp':
+                catX = bedCenterX;
+                catY = bed.offsetTop - leaveDistance;
+                break;
+            case 'Space':
                 catX = bedCenterX;
                 catY = bed.offsetTop - leaveDistance;
                 break;
@@ -454,6 +520,7 @@ function initHouseCatMovement() {
             e.preventDefault();
             wakeUp();
             moveCatAwayFromBed(wakeDirection);
+            checkYarnInteraction();
             houseCatSprite.classList.add('moving');
             clearTimeout(moveTimeout);
             moveTimeout = setTimeout(() => {
@@ -503,6 +570,7 @@ function initHouseCatMovement() {
             }, 150);
 
             // Verificar colisión con la cama
+            checkYarnInteraction();
             checkBedCollision();
         }
     });
