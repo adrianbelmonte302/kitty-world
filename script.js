@@ -447,11 +447,13 @@ function initHouseCatMovement() {
         if (houseInterior.style.display !== 'block') return;
 
         let moved = false;
+        const isSpaceKey = e.code === 'Space' || e.key === ' ' || e.key === 'Spacebar';
+        const wakeDirection = isSpaceKey ? 'Space' : e.key;
 
-        if (isSleeping && arrowKeys.has(e.key)) {
+        if (isSleeping && (arrowKeys.has(e.key) || isSpaceKey)) {
             e.preventDefault();
             wakeUp();
-            moveCatAwayFromBed(e.key);
+            moveCatAwayFromBed(wakeDirection);
             houseCatSprite.classList.add('moving');
             clearTimeout(moveTimeout);
             moveTimeout = setTimeout(() => {
