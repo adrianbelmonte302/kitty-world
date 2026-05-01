@@ -109,11 +109,8 @@ function getFallbackPixelData(breed) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Script loaded');
-
     // Load cat images first, then draw them
     loadCatImages().then(() => {
-        console.log('Images loaded, drawing canvases');
         drawCatCanvases();
     }).catch(error => {
         console.error('Error loading images:', error);
@@ -130,30 +127,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const breedOptions = document.querySelectorAll('.breed-option');
     let selectedBreed = null;
 
-    console.log('Elements found:', launcher, characterCreation, startBtn);
-
     startBtn.addEventListener('click', function() {
-        console.log('Start button clicked');
         launcher.style.display = 'none';
         characterCreation.style.display = 'block';
     });
 
     optionsBtn.addEventListener('click', function() {
-        // Aquí irá el menú de opciones
-        alert('Opciones: (Próximamente)');
+        // Aqui ira el menu de opciones
+        alert('Opciones: (Proximamente)');
     });
 
     exitBtn.addEventListener('click', function() {
-        // En un navegador, esto no cierra la pestaña, pero podemos mostrar un mensaje
+        // En un navegador, esto no cierra la pestana, pero podemos mostrar un mensaje
         if (confirm('¿Quieres salir de Kitty World?')) {
-            window.close(); // Esto puede no funcionar en todos los navegadores
+            window.close(); // Intento de cierre si la pestaÃ±a fue abierta por script
+            launcher.style.display = 'block';
+            characterCreation.style.display = 'none';
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('house-interior').style.display = 'none';
+            document.getElementById('closet-screen')?.classList.remove('open');
         }
     });
 
     // Breed selection
     breedOptions.forEach(option => {
         option.addEventListener('click', function() {
-            console.log('Breed selected:', this.dataset.breed);
             breedOptions.forEach(opt => opt.classList.remove('selected'));
             this.classList.add('selected');
             selectedBreed = this.dataset.breed;
@@ -168,8 +166,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Recuerda que debes elegir un nombre y una raza para tu gatito.');
             return;
         }
-
-        console.log('Creating cat:', catName, selectedBreed);
 
         // Guardar datos del gato
         const catData = {
@@ -198,7 +194,7 @@ function showGameScreen(catData) {
     const catBreedDisplay = document.getElementById('cat-breed-display');
     const catSprite = document.getElementById('cat-sprite');
 
-    // Mostrar información del gato
+    // Mostrar informaciÃƒÂ³n del gato
     catNameDisplay.textContent = catData.name;
     catBreedDisplay.textContent = catData.breed.replace('-', ' ');
 
@@ -221,21 +217,21 @@ function initCatMovement(catData) {
     let isMoving = false;
     let moveTimeout;
 
-    // Posición inicial
+    // PosiciÃƒÂ³n inicial
     catSprite.style.left = catX + 'px';
     catSprite.style.top = catY + 'px';
 
-    // Función para verificar si el gato está en la puerta
+    // FunciÃƒÂ³n para verificar si el gato estÃƒÂ¡ en la puerta
     function checkDoorCollision() {
         const houseRect = house.getBoundingClientRect();
         const catRect = catSprite.getBoundingClientRect();
 
-        // Verificar si el gato está cerca de la puerta (zona de colisión)
+        // Verificar si el gato estÃƒÂ¡ cerca de la puerta (zona de colisiÃƒÂ³n)
         const doorX = houseRect.left + houseRect.width / 2;
         const doorY = houseRect.top + houseRect.height / 2;
         const distance = Math.sqrt(Math.pow(catRect.left - doorX, 2) + Math.pow(catRect.top - doorY, 2));
 
-        if (distance < 80) { // Distancia de activación
+        if (distance < 80) { // Distancia de activaciÃƒÂ³n
             enterHouse(catData);
         }
     }
@@ -274,18 +270,18 @@ function initCatMovement(catData) {
             catSprite.style.left = catX + 'px';
             catSprite.style.top = catY + 'px';
 
-            // Agregar clase de movimiento para animación
+            // Agregar clase de movimiento para animaciÃƒÂ³n
             catSprite.classList.add('moving');
 
             // Limpiar timeout anterior
             clearTimeout(moveTimeout);
 
-            // Remover clase de movimiento después de un tiempo
+            // Remover clase de movimiento despuÃƒÂ©s de un tiempo
             moveTimeout = setTimeout(() => {
                 catSprite.classList.remove('moving');
             }, 150);
 
-            // Verificar colisión con la puerta
+            // Verificar colisiÃƒÂ³n con la puerta
             checkDoorCollision();
         }
     });
@@ -304,7 +300,7 @@ function enterHouse(catData) {
     // Mostrar interior de la casa
     houseInterior.style.display = 'block';
 
-    // Configurar información del gato en la casa
+    // Configurar informaciÃƒÂ³n del gato en la casa
     houseCatName.textContent = catData.name;
     houseCatBreed.textContent = catData.breed.replace('-', ' ');
     houseCatSprite.src = `pixelart/${catData.breed}.png`;
@@ -346,17 +342,14 @@ function initHouseCatMovement() {
     let closetTimer = 0;
     const closetDelay = 1500;
     let currentOutfit = 'Ninguno';
-    let isPlaying = false;
-    let playIndicator = null;
-    let playTimeout = null;
 
-    // Posición inicial
+    // PosiciÃƒÂ³n inicial
     houseCatSprite.style.left = catX + 'px';
     houseCatSprite.style.top = catY + 'px';
 
-    // Función para verificar si el gato está cerca de la cama
+    // FunciÃƒÂ³n para verificar si el gato estÃƒÂ¡ cerca de la cama
     function checkBedCollision() {
-        if (isSleeping) return; // Si ya está durmiendo, no verificar
+        if (isSleeping) return; // Si ya estÃƒÂ¡ durmiendo, no verificar
 
         if (Date.now() - bedAvoidanceTimer < bedAvoidanceDelay) return;
 
@@ -385,7 +378,7 @@ function initHouseCatMovement() {
         }
     }
 
-    // Función para hacer que el gato se duerma
+    // FunciÃƒÂ³n para hacer que el gato se duerma
     function startSleeping() {
         isSleeping = true;
         stopPlayingWithYarn();
@@ -395,9 +388,9 @@ function initHouseCatMovement() {
         // Crear indicador de dormir
         sleepIndicator = document.createElement('div');
         sleepIndicator.className = 'sleep-indicator';
-        sleepIndicator.textContent = '� Durmiendo en la cama...';
+        sleepIndicator.textContent = 'Durmiendo en la cama...';
         sleepIndicator.style.left = (catX + 16) + 'px'; // Centrar mejor
-        sleepIndicator.style.top = (catY - 40) + 'px'; // Más arriba
+        sleepIndicator.style.top = (catY - 40) + 'px'; // Mas arriba
         houseRoom.appendChild(sleepIndicator);
 
         setTimeout(() => {
@@ -407,7 +400,7 @@ function initHouseCatMovement() {
         }, 5000);
     }
 
-    // Función para despertar al gato
+    // FunciÃƒÂ³n para despertar al gato
     function wakeUp() {
         isSleeping = false;
         houseCatSprite.classList.remove('sleeping');
@@ -620,18 +613,18 @@ function initHouseCatMovement() {
             houseCatSprite.style.left = catX + 'px';
             houseCatSprite.style.top = catY + 'px';
 
-            // Agregar clase de movimiento para animación
+            // Agregar clase de movimiento para animaciÃƒÂ³n
             houseCatSprite.classList.add('moving');
 
             // Limpiar timeout anterior
             clearTimeout(moveTimeout);
 
-            // Remover clase de movimiento después de un tiempo
+            // Remover clase de movimiento despuÃƒÂ©s de un tiempo
             moveTimeout = setTimeout(() => {
             houseCatSprite.classList.remove('moving');
         }, 150);
 
-        // Verificar colisión con la cama
+        // Verificar colisiÃƒÂ³n con la cama
         checkYarnInteraction();
         checkBedCollision();
         checkWardrobeProximity();

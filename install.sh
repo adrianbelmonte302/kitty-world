@@ -1,25 +1,28 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Script de instalación para desplegar Kitty World en una VM Linux (Ubuntu/Debian)
-# Este script instala Nginx y configura el sitio web en el puerto 80
+# Despliegue de Kitty World en Ubuntu/Debian con Nginx.
 
-echo "Actualizando el código desde el repositorio..."
+echo "Actualizando codigo del repositorio..."
 git pull origin main
 
-echo "Actualizando el sistema..."
+echo "Actualizando paquetes del sistema..."
 sudo apt update
 
 echo "Instalando Nginx..."
 sudo apt install -y nginx
 
-echo "Copiando archivos del juego a /var/www/html..."
+echo "Publicando archivos en /var/www/html..."
 sudo rm -rf /var/www/html/*
-sudo cp -r * /var/www/html/
+sudo cp -r index.html styles.css script.js pixelart /var/www/html/
+
+echo "Verificando configuracion de Nginx..."
+sudo nginx -t
 
 echo "Reiniciando Nginx..."
 sudo systemctl restart nginx
 
-echo "Verificando estado de Nginx..."
+echo "Estado de Nginx:"
 sudo systemctl status nginx --no-pager
 
-echo "¡Despliegue completado! Accede al juego en http://localhost o http://<IP-de-la-VM>"
+echo "Despliegue completado. Accede en http://localhost o http://<IP-de-la-VM>"

@@ -1,66 +1,52 @@
 # Kitty World - Juego de Gatos
 
-Un juego web divertido ambientado en el mundo de los gatos, creado con HTML5, CSS y JavaScript.
+Juego web ambientado en el mundo de los gatos, creado con HTML5, CSS y JavaScript.
 
-## Cómo ejecutar
+## Como ejecutar
 
-1. Abre `index.html` en tu navegador web favorito.
-2. Haz clic en "Empezar Juego" para crear tu personaje.
-3. Elige un nombre y selecciona una raza de gato.
-4. ¡Explora el mundo virtual moviendo a tu gato con las flechas del teclado!
-5. Acércate a la casa para entrar al interior.
+1. Abre `index.html` en tu navegador.
+2. Haz clic en `Empezar Juego`.
+3. Escribe un nombre y elige una raza.
+4. Mueve al gatito con las flechas del teclado.
+5. Acercate a la casa para entrar.
 
-## Características del Juego
+## Caracteristicas
 
-- **Creación de Personaje**: Elige nombre y raza de gato (Birmano, Persa, Mau Egipcio, Siamés, Esfinge)
-- **Mundo Exterior**: Jardín con casa, árboles y río
-- **Casa Interior**: Explora el interior con cama, comida, juguetes y ventana
-- **Movimiento**: Controla a tu gato con las flechas del teclado en ambos mundos
-- **Animación**: El gato "camina" cuando se mueve
-- **Sistema de Sueño**: Acércate a la cama para que tu gato se acueste y duerma (5 segundos). Presiona cualquier flecha para despertarlo antes.
-- **Sprites Personalizados**: Usa tus propias imágenes de pixel art para los gatos
+- Creacion de personaje con nombre y raza.
+- Mundo exterior con casa, jardin y rio.
+- Interior de casa con cama, comida, ventana, lana y armario.
+- Movimiento con teclado en ambos escenarios.
+- Animacion de movimiento del gatito.
+- Sistema de sueno al acercarte a la cama.
+- Sprites personalizados por raza desde `pixelart/`.
 
 ## Despliegue en servidor
 
-Para desplegar el juego en un servidor (como una VM local), sigue estos pasos:
+Para desplegar en una VM Ubuntu/Debian:
 
-1. Clona el repositorio: `git clone https://github.com/adrianbelmonte302/kitty-world.git`
+1. Clona el repo: `git clone https://github.com/adrianbelmonte302/kitty-world.git`
 2. Entra al directorio: `cd kitty-world`
-3. Ejecuta el script de instalación: `bash install.sh` (requiere sudo)
-4. Accede al juego en `http://localhost` o `http://<IP-del-servidor>`
+3. Ejecuta el script: `bash install.sh` (usa `sudo`)
+4. Abre `http://localhost` o `http://<IP-del-servidor>`
 
-El script instala Nginx y configura el sitio en el puerto 80.
+El script instala Nginx y publica el sitio en el puerto 80.
 
-## Estructura del proyecto
+## Estructura
 
-- `index.html`: Página principal con el launcher
-- `styles.css`: Estilos para la interfaz
-- `script.js`: Lógica JavaScript básica
-- `pixelart/`: Carpeta para imágenes personalizadas de pixel art
-- `README.md`: Este archivo
+- `index.html`: pantalla principal y vistas del juego.
+- `styles.css`: estilos de la interfaz.
+- `script.js`: logica del juego.
+- `pixelart/`: imagenes PNG de las razas.
+- `install.sh`: script de despliegue en VM Linux.
 
-## Pixel Art Personalizado
+## Pixel Art personalizado
 
-Puedes crear tus propias imágenes de pixel art para los gatos. Las especificaciones son:
+Coloca imagenes PNG de `64x64` en `pixelart/` con estos nombres:
 
-- **Formato**: PNG con transparencia
-- **Tamaño**: 64x64 píxeles
-- **Estilo**: Pixel art (colores sólidos, sin anti-aliasing)
-
-Coloca tus imágenes en la carpeta `pixelart/` con estos nombres:
 - `birmano.png`
 - `persa.png`
 - `mau-egipcio.png`
 - `siames.png`
 - `esfinge.png`
 
-Si no hay imágenes personalizadas, el juego usará pixel art generado por código como respaldo.
-
-## Próximos pasos
-
-- Implementar la lógica del juego
-- Agregar gráficos y sonidos
-- Crear niveles y mecánicas de juego
-- Mejorar la interfaz de usuario
-
-¡Diviértete programando tu juego de gatos!
+Si falta alguna imagen, el juego usa pixel art de respaldo generado por codigo.
