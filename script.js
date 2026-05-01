@@ -139,8 +139,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     exitBtn.addEventListener('click', function() {
         // En un navegador, esto no cierra la pestana, pero podemos mostrar un mensaje
-        if (confirm('¿Quieres salir de Kitty World?')) {
-            window.close(); // Intento de cierre si la pestaÃ±a fue abierta por script
+        if (confirm('ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿Quieres salir de Kitty World?')) {
+            window.close(); // Intento de cierre si la pestaÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±a fue abierta por script
             launcher.style.display = 'block';
             characterCreation.style.display = 'none';
             document.getElementById('game-screen').style.display = 'none';
@@ -194,7 +194,7 @@ function showGameScreen(catData) {
     const catBreedDisplay = document.getElementById('cat-breed-display');
     const catSprite = document.getElementById('cat-sprite');
 
-    // Mostrar informaciÃƒÂ³n del gato
+    // Mostrar informaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n del gato
     catNameDisplay.textContent = catData.name;
     catBreedDisplay.textContent = catData.breed.replace('-', ' ');
 
@@ -211,28 +211,41 @@ function showGameScreen(catData) {
 function initCatMovement(catData) {
     const catSprite = document.getElementById('cat-sprite');
     const house = document.getElementById('house');
+    const waterPark = document.getElementById('water-park');
     let catX = 200;
     let catY = 300;
     const moveSpeed = 10;
     let isMoving = false;
     let moveTimeout;
 
-    // PosiciÃƒÂ³n inicial
+    // PosiciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n inicial
     catSprite.style.left = catX + 'px';
     catSprite.style.top = catY + 'px';
 
-    // FunciÃƒÂ³n para verificar si el gato estÃƒÂ¡ en la puerta
+    // FunciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n para verificar si el gato estÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ en la puerta
     function checkDoorCollision() {
         const houseRect = house.getBoundingClientRect();
         const catRect = catSprite.getBoundingClientRect();
 
-        // Verificar si el gato estÃƒÂ¡ cerca de la puerta (zona de colisiÃƒÂ³n)
+        // Verificar si el gato estÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ cerca de la puerta (zona de colisiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n)
         const doorX = houseRect.left + houseRect.width / 2;
         const doorY = houseRect.top + houseRect.height / 2;
         const distance = Math.sqrt(Math.pow(catRect.left - doorX, 2) + Math.pow(catRect.top - doorY, 2));
 
-        if (distance < 80) { // Distancia de activaciÃƒÂ³n
+        if (distance < 80) { // Distancia de activaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n
             enterHouse(catData);
+        }
+    }
+
+    function checkWaterParkCollision() {
+        const parkRect = waterPark.getBoundingClientRect();
+        const catRect = catSprite.getBoundingClientRect();
+        const parkX = parkRect.left + parkRect.width / 2;
+        const parkY = parkRect.top + parkRect.height / 2;
+        const distance = Math.sqrt(Math.pow(catRect.left - parkX, 2) + Math.pow(catRect.top - parkY, 2));
+
+        if (distance < 90) {
+            enterWaterPark(catData);
         }
     }
 
@@ -270,19 +283,20 @@ function initCatMovement(catData) {
             catSprite.style.left = catX + 'px';
             catSprite.style.top = catY + 'px';
 
-            // Agregar clase de movimiento para animaciÃƒÂ³n
+            // Agregar clase de movimiento para animaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n
             catSprite.classList.add('moving');
 
             // Limpiar timeout anterior
             clearTimeout(moveTimeout);
 
-            // Remover clase de movimiento despuÃƒÂ©s de un tiempo
+            // Remover clase de movimiento despuÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©s de un tiempo
             moveTimeout = setTimeout(() => {
                 catSprite.classList.remove('moving');
             }, 150);
 
-            // Verificar colisiÃƒÂ³n con la puerta
+            // Verificar colision con la puerta
             checkDoorCollision();
+            checkWaterParkCollision();
         }
     });
 }
@@ -300,7 +314,7 @@ function enterHouse(catData) {
     // Mostrar interior de la casa
     houseInterior.style.display = 'block';
 
-    // Configurar informaciÃƒÂ³n del gato en la casa
+    // Configurar informaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n del gato en la casa
     houseCatName.textContent = catData.name;
     houseCatBreed.textContent = catData.breed.replace('-', ' ');
     houseCatSprite.src = `pixelart/${catData.breed}.png`;
@@ -313,6 +327,129 @@ function enterHouse(catData) {
         houseInterior.style.display = 'none';
         gameScreen.style.display = 'block';
     });
+}
+
+function enterWaterPark(catData) {
+    const gameScreen = document.getElementById('game-screen');
+    const waterParkScreen = document.getElementById('water-park-screen');
+    const waterParkCatSprite = document.getElementById('water-park-cat-sprite');
+    const exitWaterParkBtn = document.getElementById('exit-water-park');
+
+    gameScreen.style.display = 'none';
+    waterParkScreen.style.display = 'block';
+    waterParkCatSprite.src = `pixelart/${catData.breed}.png`;
+
+    if (!waterParkScreen.dataset.ready) {
+        initWaterParkMovement(catData);
+        waterParkScreen.dataset.ready = 'true';
+    }
+
+    if (!exitWaterParkBtn.dataset.bound) {
+        exitWaterParkBtn.addEventListener('click', function() {
+            waterParkScreen.style.display = 'none';
+            document.getElementById('slide-ride-screen').style.display = 'none';
+            gameScreen.style.display = 'block';
+        });
+        exitWaterParkBtn.dataset.bound = 'true';
+    }
+}
+
+function initWaterParkMovement(catData) {
+    const waterParkScreen = document.getElementById('water-park-screen');
+    const waterParkWorld = document.getElementById('water-park-world');
+    const catSprite = document.getElementById('water-park-cat-sprite');
+    const slides = [
+        document.getElementById('slide-1'),
+        document.getElementById('slide-2'),
+        document.getElementById('slide-3')
+    ];
+    let catX = 80;
+    let catY = 360;
+    const moveSpeed = 10;
+    let moveTimeout;
+
+    catSprite.style.left = catX + 'px';
+    catSprite.style.top = catY + 'px';
+
+    function checkSlideCollision() {
+        const catRect = catSprite.getBoundingClientRect();
+        for (const slide of slides) {
+            const slideRect = slide.getBoundingClientRect();
+            const slideX = slideRect.left + slideRect.width / 2;
+            const slideY = slideRect.top + slideRect.height / 2;
+            const catXCenter = catRect.left + catRect.width / 2;
+            const catYCenter = catRect.top + catRect.height / 2;
+            const distance = Math.sqrt(Math.pow(catXCenter - slideX, 2) + Math.pow(catYCenter - slideY, 2));
+
+            if (distance < 95) {
+                startSlideRide(catData, slide.id);
+                break;
+            }
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (waterParkScreen.style.display !== 'block') return;
+        if (document.getElementById('slide-ride-screen').style.display === 'flex') return;
+
+        let moved = false;
+
+        switch(e.key) {
+            case 'ArrowUp':
+                e.preventDefault();
+                catY = Math.max(0, catY - moveSpeed);
+                moved = true;
+                break;
+            case 'ArrowDown':
+                e.preventDefault();
+                catY = Math.min(waterParkWorld.clientHeight - 64, catY + moveSpeed);
+                moved = true;
+                break;
+            case 'ArrowLeft':
+                e.preventDefault();
+                catX = Math.max(0, catX - moveSpeed);
+                moved = true;
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                catX = Math.min(waterParkWorld.clientWidth - 64, catX + moveSpeed);
+                moved = true;
+                break;
+        }
+
+        if (moved) {
+            catSprite.style.left = catX + 'px';
+            catSprite.style.top = catY + 'px';
+            catSprite.classList.add('moving');
+            clearTimeout(moveTimeout);
+            moveTimeout = setTimeout(() => {
+                catSprite.classList.remove('moving');
+            }, 150);
+            checkSlideCollision();
+        }
+    });
+}
+
+function startSlideRide(catData, slideId) {
+    const slideRideScreen = document.getElementById('slide-ride-screen');
+    const rideTitle = document.getElementById('slide-ride-title');
+    const rideCat = document.getElementById('slide-ride-cat');
+    const backBtn = document.getElementById('back-to-water-park');
+
+    rideTitle.textContent = slideId.replace('slide-', 'Tobogan ') + 'en accion';
+    rideCat.src = `pixelart/${catData.breed}.png`;
+    rideCat.classList.remove('sliding');
+    void rideCat.offsetWidth;
+    rideCat.classList.add('sliding');
+    slideRideScreen.style.display = 'flex';
+
+    if (!backBtn.dataset.bound) {
+        backBtn.addEventListener('click', function() {
+            slideRideScreen.style.display = 'none';
+            rideCat.classList.remove('sliding');
+        });
+        backBtn.dataset.bound = 'true';
+    }
 }
 
 function initHouseCatMovement() {
@@ -343,13 +480,13 @@ function initHouseCatMovement() {
     const closetDelay = 1500;
     let currentOutfit = 'Ninguno';
 
-    // PosiciÃƒÂ³n inicial
+    // PosiciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n inicial
     houseCatSprite.style.left = catX + 'px';
     houseCatSprite.style.top = catY + 'px';
 
-    // FunciÃƒÂ³n para verificar si el gato estÃƒÂ¡ cerca de la cama
+    // FunciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n para verificar si el gato estÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ cerca de la cama
     function checkBedCollision() {
-        if (isSleeping) return; // Si ya estÃƒÂ¡ durmiendo, no verificar
+        if (isSleeping) return; // Si ya estÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ durmiendo, no verificar
 
         if (Date.now() - bedAvoidanceTimer < bedAvoidanceDelay) return;
 
@@ -378,7 +515,7 @@ function initHouseCatMovement() {
         }
     }
 
-    // FunciÃƒÂ³n para hacer que el gato se duerma
+    // FunciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n para hacer que el gato se duerma
     function startSleeping() {
         isSleeping = true;
         stopPlayingWithYarn();
@@ -400,7 +537,7 @@ function initHouseCatMovement() {
         }, 5000);
     }
 
-    // FunciÃƒÂ³n para despertar al gato
+    // FunciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n para despertar al gato
     function wakeUp() {
         isSleeping = false;
         houseCatSprite.classList.remove('sleeping');
@@ -423,7 +560,7 @@ function initHouseCatMovement() {
 
         playIndicator = document.createElement('div');
         playIndicator.className = 'play-indicator';
-        playIndicator.textContent = '¡Jugando con la lana!';
+        playIndicator.textContent = 'ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡Jugando con la lana!';
         playIndicator.style.left = (catX + 16) + 'px';
         playIndicator.style.top = (catY - 40) + 'px';
         houseRoom.appendChild(playIndicator);
@@ -613,18 +750,18 @@ function initHouseCatMovement() {
             houseCatSprite.style.left = catX + 'px';
             houseCatSprite.style.top = catY + 'px';
 
-            // Agregar clase de movimiento para animaciÃƒÂ³n
+            // Agregar clase de movimiento para animaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n
             houseCatSprite.classList.add('moving');
 
             // Limpiar timeout anterior
             clearTimeout(moveTimeout);
 
-            // Remover clase de movimiento despuÃƒÂ©s de un tiempo
+            // Remover clase de movimiento despuÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©s de un tiempo
             moveTimeout = setTimeout(() => {
             houseCatSprite.classList.remove('moving');
         }, 150);
 
-        // Verificar colisiÃƒÂ³n con la cama
+        // Verificar colisiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n con la cama
         checkYarnInteraction();
         checkBedCollision();
         checkWardrobeProximity();

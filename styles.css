@@ -217,6 +217,14 @@ input[type="text"] {
     z-index: 2;
 }
 
+#water-park {
+    position: absolute;
+    right: 120px;
+    top: 180px;
+    font-size: 3.2em;
+    z-index: 2;
+}
+
 #garden {
     position: absolute;
     left: 300px;
@@ -349,8 +357,8 @@ input[type="text"] {
 
 #wardrobe {
     position: absolute;
-    right: 60px;
-    top: 20px;
+    left: 50px;
+    top: 130px;
     font-size: 1.6em;
     text-align: center;
     z-index: 2;
@@ -500,4 +508,116 @@ input[type="text"] {
     font-size: 12px;
     pointer-events: none;
     z-index: 5;
+}
+
+#water-park-screen {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #6fd3ff 0%, #9ff6ff 100%);
+    overflow: hidden;
+}
+
+#water-park-ui {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+#water-park-title {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+#exit-water-park {
+    background-color: #fd79a8;
+    color: white;
+}
+
+#water-park-world {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    width: 150px;
+    height: 160px;
+    border-radius: 28px;
+    background: linear-gradient(160deg, #ffd166, #ff9f1c);
+    color: #333;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.2);
+}
+
+#slide-1 { left: 140px; top: 180px; }
+#slide-2 { left: 430px; top: 130px; }
+#slide-3 { left: 720px; top: 200px; }
+
+#water-park-cat-sprite {
+    position: absolute;
+    left: 80px;
+    top: 360px;
+    width: 64px;
+    height: 64px;
+    z-index: 3;
+    image-rendering: pixelated;
+}
+
+#slide-ride-screen {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 30;
+}
+
+#slide-ride-content {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    width: min(90vw, 620px);
+    text-align: center;
+}
+
+#slide-track {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    margin: 16px 0;
+    border-radius: 18px;
+    background: linear-gradient(140deg, #89f7fe 0%, #66a6ff 100%);
+    overflow: hidden;
+}
+
+#slide-ride-cat {
+    position: absolute;
+    left: 24px;
+    top: 24px;
+    width: 64px;
+    height: 64px;
+    image-rendering: pixelated;
+}
+
+#slide-ride-cat.sliding {
+    animation: slideRide 1.6s ease-in-out forwards;
+}
+
+@keyframes slideRide {
+    0% { left: 24px; top: 24px; transform: rotate(-12deg); }
+    50% { left: 250px; top: 90px; transform: rotate(10deg); }
+    100% { left: calc(100% - 90px); top: 150px; transform: rotate(0deg); }
 }
